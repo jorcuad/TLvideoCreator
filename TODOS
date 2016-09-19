@@ -1,0 +1,6 @@
+Botones y campos de texto de la app de bodas:
+
+ * Toolbar: nuevo, abrir, guardar, limpiar, eliminar
+ * Inputs: hashtag, numero maximo de fotos, filtros a aplicar, cancion de fondo
+ * Checks: con texto del tweet
+ * Galerias: selector de fotos
