@@ -49,7 +49,7 @@ def main():
 			yf = int(math.fabs(H+h)/2)
 			background.paste(im_out,(xi,yi,xf,yf))
 			im_out = background
-			im_out.save(tf[0]+'_'+str(W)+'x'+str(H)+tf[1])
+			im_out.save("./pics/resized/"+tf[0].split('/')[3]+'_'+str(W)+'x'+str(H)+tf[1])
 	exit(0)
 
 if __name__ == '__main__':

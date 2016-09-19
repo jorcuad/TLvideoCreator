@@ -2,8 +2,8 @@ from moviepy.editor import ImageSequenceClip
 from os import listdir
 from os.path import isfile, join
 
-images = [f for f in listdir("./") if isfile(join("./",f))]
+images = ["./pics/blended/"+f for f in listdir("./pics/blended") if isfile(join("./pics/blended",f))]
 print images
 
-clip = ImageSequenceClip(images, fps=0.5)
-clip.write_videofile("movie.mp4")
+clip = ImageSequenceClip(images, fps=1)
+clip.write_videofile("./video/movie.mp4")

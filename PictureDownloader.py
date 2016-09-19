@@ -3,7 +3,7 @@ import urllib
 
 try:
 	tso = TwitterSearchOrder()
-	tso.set_keywords(['#HoyTocaHappyHours']) #Hashtag a buscar.
+	tso.set_keywords(['#bodas']) #Hashtag a buscar.
 	tso.set_include_entities(True)
 
 	ts = TwitterSearch(
@@ -18,10 +18,9 @@ try:
 		try:
 			media = tweet['entities']['media']
 			print( '%s' % (media[0]['media_url']))
-			urllib.urlretrieve(media[0]['media_url'],"./pics/"+str(i)+".jpg") #TODO catch img format
+			urllib.urlretrieve(media[0]['media_url'],"./pics/originals/"+str(i)+".jpg") #TODO catch img format
 			i = i+1
 		except:
 			print 'Tweet sin imagen.'
-			i = i+1
 except TwitterSearchException as e:
 	print(e)
