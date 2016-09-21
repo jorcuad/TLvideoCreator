@@ -1,107 +1,72 @@
 from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import Gio
-import sys
+from os.path import abspath, dirname, join
 
+WHERE_AM_I = abspath(dirname(__file__))
 
-class MyWindow(Gtk.ApplicationWindow):
-
-	def __init__(self, app):
-		Gtk.Window.__init__(self, title="Toolbar Example", application=app)
-		self.set_default_size(800, 400)
-
-		# a grid to attach the toolbar (see below)
-		grid = Gtk.Grid()
-		self.add(grid)
-		# we have to show the grid (and therefore the toolbar) with show(),
-		# as show_all() would show also the buttons in the toolbar that we want to
-		# be hidden (such as the leave_fullscreen button)
-		grid.show()
-
-		# a builder to add the UI designed with Glade to the grid:
-		builder = Gtk.Builder()
-		# get the file (if it is there)
-		try:
-			builder.add_from_file("app.ui")
-		except:
-			print("file not found")
-			sys.exit()
-		# and attach it to the grid
-		grid.attach(builder.get_object("app-container"), 0, 0, 1, 1)
-
-		# two buttons that will be used later in a method
-		#self.fullscreen_button = builder.get_object("fullscreen_button")
-		#self.leave_fullscreen_button = builder.get_object(
-		#    "leave_fullscreen_button")
-
-		# create the actions that control the window, connect their signal to a
-		# callback method (see below), add the action to the window:
-
-		# undo
-		#undo_action = Gio.SimpleAction.new("undo", None)
-		#undo_action.connect("activate", self.undo_callback)
-		#self.add_action(undo_action)
-
-		# and fullscreen
-		#fullscreen_action = Gio.SimpleAction.new("fullscreen", None)
-		#fullscreen_action.connect("activate", self.fullscreen_callback)
-		#self.add_action(fullscreen_action)
-
-	# callback for undo
-	#def undo_callback(self, action, parameter):
-	#    print("You clicked \"Undo\".")
-
-	# callback for fullscreen
-	#def fullscreen_callback(self, action, parameter):
-	#    # check if the state is the same as Gdk.WindowState.FULLSCREEN, which
-		# is a bit flag
-	#    is_fullscreen = self.get_window().get_state(
-	#    ) & Gdk.WindowState.FULLSCREEN != 0
-	#    if is_fullscreen:
-	#        self.unfullscreen()
-	#        self.leave_fullscreen_button.hide()
-	#        self.fullscreen_button.show()
-	#    else:
-	#        self.fullscreen()
-	#        self.fullscreen_button.hide()
-	#        self.leave_fullscreen_button.show()
-
-
-class MyApplication(Gtk.Application):
+class MyApp(object):
 
 	def __init__(self):
-		Gtk.Application.__init__(self)
+		"""
+		Build GUI
+		"""
 
-	def do_activate(self):
-		win = MyWindow(self)
-		# show the window - with show() not show_all() because that would show also
-		# the leave_fullscreen button
-		win.show()
+		# Declare states / variables
+		self.counter = 0
 
-	def do_startup(self):
-		Gtk.Application.do_startup(self)
+		# Build GUI from Glade file
+		self.builder = Gtk.Builder()
+		self.glade_file = join(WHERE_AM_I, 'app.ui')
+		self.builder.add_from_file(self.glade_file)
 
-		# actions that control the application: create, connect their signal to a
-		# callback method (see below), add the action to the application
+		# Get objects
+		go = self.builder.get_object
 
-		# new
-		new_action = Gio.SimpleAction.new("new", None)
-		new_action.connect("activate", self.new_callback)
-		app.add_action(new_action)
+		# Buttons
+		self.window = go('window1')
+		self.download = go('download')
+		self.filter = go('filter')
+		self.music = go('music')
+		self.video = go('video')
 
-		# open
-		open_action = Gio.SimpleAction.new("open", None)
-		open_action.connect("activate", self.open_callback)
-		app.add_action(open_action)
+		# Fields
+		self.number = go('numero')
+		self.hashtag = go('hashtag_text')
+		self.filters = go('filters')
+		self.music_file = go('music_file')
 
-	# callback for new
-	def new_callback(self, action, parameter):
-		print("You clicked \"New\".")
+		# Data
+		self.projects = go('projects')
 
-	# callback for open
-	def open_callback(self, action, parameter):
-		print("You clicked \"Open\".")
+		#Obtener lista de proyectos
+		#TODO esto es un codigo de ejemplo
+		self.projects.append(["Proyecto 1"])
+		self.projects.append(["Proyecto 2"])
 
-app = MyApplication()
-exit_status = app.run(sys.argv)
-sys.exit(exit_status)
+		# Connect signals
+		self.builder.connect_signals(self)
+
+		# Configure interface
+		self.window.connect('delete-event', lambda x,y: Gtk.main_quit())
+
+		# Everything is ready
+		self.window.show()
+
+	def _download(self, widget, data=None):
+		print "Downloading"
+		print self.number.get_text()
+		print self.hashtag.get_text()
+
+	def _filter(self, widget, data=None):
+		print "Filtering"
+		print self.filters.get_filename()
+
+	def _music(self, widget, data=None):
+		print "Adding music"
+		print self.music_file.get_filename()
+
+	def _video(self, widget, data=None):
+		print "Generationg Video"
+
+if __name__ == '__main__':
+	gui = MyApp()
+	Gtk.main()
