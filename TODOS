@@ -4,3 +4,14 @@ Botones y campos de texto de la app de bodas:
  * Inputs: hashtag, numero maximo de fotos, filtros a aplicar, cancion de fondo
  * Checks: con texto del tweet
  * Galerias: selector de fotos
+
+
+grid = Gtk.Grid()
+grid.attach(self.get_thumbnail('./pics/originals/0.jpg'), 0, 80, 0, 80)
+grid.attach(self.get_thumbnail('./pics/originals/1.jpg'), 80, 160, 0, 80)
+grid.attach(self.get_thumbnail('./pics/originals/2.jpg'), 160, 240, 0, 80)
+grid.attach(self.get_thumbnail('./pics/originals/3.jpg'), 240, 320, 0, 80)
+grid.attach(self.get_thumbnail('./pics/originals/4.jpg'), 320, 400, 0, 80)
+grid.attach(self.get_thumbnail('./pics/originals/5.jpg'), 0, 80, 80, 160)
+self.image_gallery.add(grid)
+self.window.show_all()

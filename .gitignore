@@ -1,0 +1,5 @@
+*.pyc
+frames/*
+pics/*
+projects/*
+video/*

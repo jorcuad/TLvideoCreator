@@ -7,10 +7,10 @@ try:
 	tso.set_include_entities(True)
 
 	ts = TwitterSearch(
-		consumer_key = 'FPNOGw7VTGEJqfaV6BOFF8Bmr',
-		consumer_secret = '1Hv4amjuUh1WTgALOwGhizFMx5KYrxQuNd2s5DSKYxH6rdHNY2',
-		access_token = '227805236-RNxXUFog9m1s0N2bOMpZQKLduXeO2UnYOu7mVOuW',
-		access_token_secret = 'ow74buUsXjBbnU97SHv94CC64Ks39TGq0k9mwFysvrfk3'
+		consumer_key = '---KEY---',
+		consumer_secret = '---KEY---',
+		access_token = '---KEY---',
+		access_token_secret = '---KEY---'
 	)
 
 	i = 0 #TODO do in apythonic way
